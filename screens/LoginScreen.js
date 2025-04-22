@@ -29,7 +29,9 @@ const LoginScreen = ({
   setShowLogin,
   setShowScore,
   fadeAnim,
-  scaleAnim
+  scaleAnim,
+  onRegisterPress,
+  onLoginPress,
 }) => {
   const renderIcon = (iconName, props) => {
     const IconComponent = Icon[iconName];
@@ -45,114 +47,115 @@ const LoginScreen = ({
     >
       <View style={styles.loginContainer}>
         <View style={styles.loginContentWrapper}>
-        <View style={styles.loginHeader}>
-          <Text style={styles.loginTitle}>Bienvenido a UniQuiz</Text>
-          <Text style={styles.loginSubtitle}>Inicia sesión para guardar tu progreso</Text>
-        </View>
-
-        {/* Login Tabs */}
-        <View style={styles.loginTabs}>
-          <TouchableOpacity
-            style={[styles.loginTab, activeTab === 'login' && styles.loginTabActive]}
-            onPress={() => setActiveTab('login')}
-          >
-            <Text style={[styles.loginTabText, activeTab === 'login' && styles.loginTabTextActive]}>Iniciar Sesión</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.loginTab, activeTab === 'register' && styles.loginTabActive]}
-            onPress={() => setActiveTab('register')}
-          >
-            <Text style={[styles.loginTabText, activeTab === 'register' && styles.loginTabTextActive]}>Registrarse</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Login Form */}
-        <View style={styles.loginForm}>
-          <View style={styles.inputContainer}>
-            <View style={styles.inputIcon}>
-              {renderIcon('mail', { width: 20, height: 20, color: colors.textSecondary })}
-            </View>
-            <TextInput
-              style={styles.input}
-              placeholder="Correo electrónico"
-              placeholderTextColor={colors.textTertiary}
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
+          <View style={styles.loginHeader}>
+            <Text style={styles.loginTitle}>Bienvenido a UniQuiz</Text>
+            <Text style={styles.loginSubtitle}>Inicia sesión para guardar tu progreso</Text>
           </View>
 
-          <View style={styles.inputContainer}>
-            <View style={styles.inputIcon}>
-              {renderIcon('lock', { width: 20, height: 20, color: colors.textSecondary })}
-            </View>
-            <TextInput
-              style={styles.input}
-              placeholder="Contraseña"
-              placeholderTextColor={colors.textTertiary}
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry={!showPassword}
-            />
+          {/* Login Tabs */}
+          <View style={styles.loginTabs}>
             <TouchableOpacity
-              style={styles.passwordToggle}
-              onPress={() => setShowPassword(!showPassword)}
+              style={[styles.loginTab, activeTab === 'login' && styles.loginTabActive]}
+              onPress={() => setActiveTab('login')}
             >
-              {renderIcon(showPassword ? 'eye-off' : 'eye', { width: 20, height: 20, color: colors.textSecondary })}
+              <Text style={[styles.loginTabText, activeTab === 'login' && styles.loginTabTextActive]}>Iniciar Sesión</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.loginTab, activeTab === 'register' && styles.loginTabActive]}
+              onPress={() => setActiveTab('register')}
+            >
+              <Text style={[styles.loginTabText, activeTab === 'register' && styles.loginTabTextActive]}>Registrarse</Text>
             </TouchableOpacity>
           </View>
 
-          {activeTab === 'login' && (
-            <TouchableOpacity style={styles.forgotPassword}>
-              <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
-            </TouchableOpacity>
-          )}
-
-          <TouchableOpacity
-            style={styles.loginButton}
-            onPress={handleLogin}
-          >
-            <Text style={styles.loginButtonText}>
-              {activeTab === 'login' ? 'Iniciar Sesión' : 'Registrarse'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Social Login */}
-        <View style={styles.socialLoginContainer}>
-          <View style={styles.socialDivider}>
-            <View style={styles.dividerLine} />
-            <Text style={styles.dividerText}>O continúa con</Text>
-            <View style={styles.dividerLine} />
-          </View>
-
-          <View style={styles.socialButtons}>
-            <TouchableOpacity
-              style={styles.socialButton}
-              onPress={() => handleSocialLogin('Google')}
-            >
-              <View style={styles.socialIcon}>
-                {renderIcon('globe', { width: 20, height: 20, color: colors.textPrimary })}
+          {/* Login Form */}
+          <View style={styles.loginForm}>
+            <View style={styles.inputContainer}>
+              <View style={styles.inputIcon}>
+                {renderIcon('mail', { width: 20, height: 20, color: colors.textSecondary })}
               </View>
-              <Text style={styles.socialButtonText}>Google</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+              <TextInput
+                style={styles.input}
+                placeholder="Correo electrónico"
+                placeholderTextColor={colors.textTertiary}
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+            </View>
 
-        {/* Skip Login */}
-        <TouchableOpacity
-          style={styles.skipLoginButton}
-          onPress={() => {
-            setIsAuthenticated(true);
-            setUserName('Invitado');
-            setShowLogin(false);
-            setShowScore(true);
-          }}
-        >
-          <Text style={styles.skipLoginText}>Continuar como invitado</Text>
-        </TouchableOpacity>
+            <View style={styles.inputContainer}>
+              <View style={styles.inputIcon}>
+                {renderIcon('lock', { width: 20, height: 20, color: colors.textSecondary })}
+              </View>
+              <TextInput
+                style={styles.input}
+                placeholder="Contraseña"
+                placeholderTextColor={colors.textTertiary}
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={!showPassword}
+              />
+              <TouchableOpacity
+                style={styles.passwordToggle}
+                onPress={() => setShowPassword(!showPassword)}
+              >
+                {renderIcon(showPassword ? 'eye-off' : 'eye', { width: 20, height: 20, color: colors.textSecondary })}
+              </TouchableOpacity>
+            </View>
+
+            {activeTab === 'login' && (
+              <TouchableOpacity style={styles.forgotPassword}>
+                <Text style={styles.forgotPasswordText}>¿Olvidaste tu contraseña?</Text>
+              </TouchableOpacity>
+            )}
+
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={activeTab === 'login' ? handleLogin : onRegisterPress}
+            >
+              <Text style={styles.loginButtonText}>
+                {activeTab === 'login' ? 'Iniciar Sesión' : 'Registrarse'}
+              </Text>
+            </TouchableOpacity>
+
+          </View>
+
+          {/* Social Login */}
+          <View style={styles.socialLoginContainer}>
+            <View style={styles.socialDivider}>
+              <View style={styles.dividerLine} />
+              <Text style={styles.dividerText}>O continúa con</Text>
+              <View style={styles.dividerLine} />
+            </View>
+
+            <View style={styles.socialButtons}>
+              <TouchableOpacity
+                style={styles.socialButton}
+                onPress={() => handleSocialLogin('Google')}
+              >
+                <View style={styles.socialIcon}>
+                  {renderIcon('globe', { width: 20, height: 20, color: colors.textPrimary })}
+                </View>
+                <Text style={styles.socialButtonText}>Google</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Skip Login */}
+          <TouchableOpacity
+            style={styles.skipLoginButton}
+            onPress={() => {
+              setIsAuthenticated(true);
+              setUserName('Invitado');
+              setShowLogin(false);
+              setShowScore(true);
+            }}
+          >
+            <Text style={styles.skipLoginText}>Continuar como invitado</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </Animated.View>
@@ -165,7 +168,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 40,
   },
-  
+
   loginHeader: { alignItems: 'center', marginBottom: 30 },
   loginTitle: { fontSize: 28, fontWeight: 'bold', color: colors.textPrimary, marginBottom: 10 },
   loginSubtitle: { fontSize: 16, color: colors.textSecondary, textAlign: 'center' },
