@@ -1,0 +1,51 @@
+# Node modules
+node_modules/
+
+# macOS
+.DS_Store
+
+# Expo
+.expo/
+.expo-shared/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+expo-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# React Native
+android/
+ios/
+*.keystore
+
+# Metro bundler cache
+metro-cache/
+cache/
+
+# Watchman
+.watchmanconfig
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+ehthumbs.db
+
+# Bundles
+*.jsbundle
+*.hprof
+
+# Coverage
+coverage/
+
+# Misc
+*.lock
+*.log
