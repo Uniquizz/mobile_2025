@@ -1,5 +1,5 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { Camera } from 'react-native-feather'; 
+import { Camera } from 'react-native-feather';
 import PrimaryButton from '../components/PrimaryButton';
 
 const ProfileEditScreen = ({
@@ -58,8 +58,12 @@ const ProfileEditScreen = ({
         onChangeText={setWhatsappNumber}
       />
 
-<PrimaryButton style={styles.btn} label="Guardar" onPress={handleSaveProfile} />
-
+   
+      <PrimaryButton
+        style={{ marginTop: 40 }}
+        label="Guardar"
+        onPress={handleSaveProfile}
+      />
     </View>
   );
 };
@@ -67,7 +71,7 @@ const ProfileEditScreen = ({
 const styles = StyleSheet.create({
   container: {
     padding: 24,
-   
+
     flex: 1,
   },
 
@@ -93,12 +97,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 18,
   },
-  btn: {
-    marginTop: 40,
-    paddingTop:50
- 
- 
-  },
+
 });
 
 export default ProfileEditScreen;

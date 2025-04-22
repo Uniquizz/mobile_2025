@@ -3,10 +3,10 @@ import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 import colors from '../styles/colors';
 import * as Icon from 'react-native-feather';
 
-const PrimaryButton = ({ label, onPress, iconName = null }) => {
+const PrimaryButton = ({ label, onPress, iconName = null, style }) => {
   return (
     <TouchableOpacity
-      style={styles.button}
+      style={[styles.button, style]} // ahora acepta estilos externos
       onPress={onPress}
       activeOpacity={0.8}
     >
