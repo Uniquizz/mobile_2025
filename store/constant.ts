@@ -1,4 +1,4 @@
-import { QuizState } from "./useQuizStore";
+import { Animated } from "react-native";
 
 export const quizStoreInitialState = {
   auth: {
@@ -12,11 +12,14 @@ export const quizStoreInitialState = {
     answeredQuestions: [],
     quiz: undefined,
     score: 0,
-    streak: 10,
+    streak: 0,
+    university: undefined,
   },
   ui: {
     modalVisible: false,
     profileMenuVisible: false,
     streakModalVisible: false,
+    fadeAnim: new Animated.Value(0),
+    scaleAnim: new Animated.Value(0.95),
   }
 }

@@ -20,3 +20,17 @@ export interface Answer {
   answerText: string;
 }
 
+
+export enum UniversityKeys {
+  unam = 'unam',
+  poli = 'poli',
+  uam = 'uam',
+  unam2 = 'unam2'
+}
+export interface University {
+  id: UniversityKeys,
+  name: 'UNAM' | 'POLI' | 'UAM' | 'UNAM 2',
+  color: string,
+  iconName: 'award'
+}
+

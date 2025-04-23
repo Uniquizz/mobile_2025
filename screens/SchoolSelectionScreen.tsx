@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Animated,
   View,
@@ -9,15 +9,33 @@ import {
 } from 'react-native';
 import * as Icon from 'react-native-feather';
 import colors from '../styles/colors';
+import universities from '../data/universities';
+import { useNavigation } from '@react-navigation/native';
+import useQuizStore from '../store/useQuizStore';
+import { RootStackParamList } from '../router/stack.interface';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { University } from '../interfaces/quiz.interface';
 
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 const { width } = Dimensions.get('window');
 
-const SchoolSelectionScreen = ({
-  universities = [],
-  onSelectUniversity,
-  fadeAnim,
-  scaleAnim
-}) => {
+const SchoolSelectionScreen = () => {
+  const { resetAnimations, fadeOut, fadeIn, setUniversity, ui: {fadeAnim, scaleAnim} } = useQuizStore()
+  // const navigation = useNavigation<NavigationProp>();
+  const handleUniversitySelect = (university: University) => {
+    setUniversity(university);
+    fadeOut(() => {
+      resetAnimations();
+      // navigation.navigate('QuizConfig')
+    })
+  };
+
+  useEffect(() => {
+    resetAnimations()
+    fadeIn()
+  }, [])
+
+
   const chunkArray = (array, size) =>
     Array.from({ length: Math.ceil(array.length / size) }, (_, i) =>
       array.slice(i * size, i * size + size)
@@ -41,14 +59,14 @@ const SchoolSelectionScreen = ({
       <View style={styles.gridContainer}>
         {universityGrid.map((row, rowIndex) => (
           <View key={`row-${rowIndex}`} style={styles.row}>
-            {row.map((university) => {
+            {row.map((university: University) => {
               const IconComponent = Icon[university.iconName];
 
               return (
                 <TouchableOpacity
                   key={university.id}
                   style={[styles.card, { backgroundColor: university.color }]}
-                  onPress={() => onSelectUniversity(university)}
+                  onPress={() => handleUniversitySelect(university)}
                   activeOpacity={0.8}
                 >
                   <View style={styles.cardContent}>
