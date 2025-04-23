@@ -721,38 +721,17 @@ const QuizApp = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor={colors.background} />
-
-      {/* Header */}
-      <Header
-        showBack={showQuiz || showQuizConfig || showUniversitySelection || showScore || showLogin || showProfileEdit}
-        onBackPress={handleBackPress}
-        showMenu={showHomeScreen}
-        onMenuPress={() => setProfileMenuVisible(true)}
-        title={
-          showHomeScreen ? '' :
-            showUniversitySelection ? 'Selecciona Universidad' :
-              showQuizConfig ? 'Configura tu Quiz' :
-                showQuiz ? 'Uniquiz' :
-                  showLogin ? 'Iniciar Sesión' :
-                    showScore ? 'Resultados' :
-                      showProfileEdit ? 'Editar Perfil' : 'Uniquiz'
-        }
-        userName={userName}
-      />
-      {/* <NavigationContainer>
+      <NavigationContainer>
         <RootStack></RootStack>
-      </NavigationContainer> */}
-
-
-      <ScrollView
+      </NavigationContainer>
+      <View
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
+
         {/* Home Screen */}
-        {showHomeScreen && (
-
+        {false && (
           <HomeScreen/>
-
         )}
 
 
@@ -765,18 +744,7 @@ const QuizApp = () => {
 
         {/* Quiz Configuration Screen */}
         {showQuizConfig && (
-          <QuizConfigScreen
-            fadeAnim={fadeAnim}
-            scaleAnim={scaleAnim}
-            selectedUniversity={selectedUniversity}
-            selectedQuestionCount={selectedQuestionCount}
-            selectedSubject={selectedSubject}
-            subjects={subjects}
-            questionCountOptions={questionCountOptions}
-            onSelectSubject={setSelectedSubject}
-            onSelectQuestionCount={setSelectedQuestionCount}
-            onStart={handleStartQuiz}
-          />
+          <QuizConfigScreen/>
         )}
 
 
@@ -870,7 +838,7 @@ const QuizApp = () => {
           />
         )}
 
-      </ScrollView>
+      </View>
 
       {/* Modales */}
       <StreakModal/>
@@ -904,14 +872,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-
-
-
-
-
-
-
-
 });
 
 export default QuizApp;

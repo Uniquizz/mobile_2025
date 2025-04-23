@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Animated,
   View,
@@ -9,19 +9,27 @@ import {
 import colors from '../styles/colors';
 import * as Icon from 'react-native-feather';
 import PrimaryButton from '../components/PrimaryButton';
+import useQuizStore from '../store/useQuizStore';
+import { MatterCode, questionCountOptions } from '../data/constants';
+const subjects = Object.keys(MatterCode);
 
-const QuizConfigScreen = ({
-  selectedUniversity,
-  selectedQuestionCount,
-  selectedSubject,
-  subjects,
-  questionCountOptions,
-  onSelectSubject,
-  onSelectQuestionCount,
-  onStart,
-  fadeAnim,
-  scaleAnim,
-}) => {
+const QuizConfigScreen = () => {
+
+  const { quiz: { university }, ui: { fadeAnim, scaleAnim }, fadeIn, fadeOut, resetAnimations } = useQuizStore()
+  const [selectedQuestionCount, setSelectedQuestionCount] = useState(5);
+  const [selectedSubject, setSelectedSubject] = useState(null);
+
+  const handleStartQuiz = () => {
+    fadeOut(() => {
+      // navigation.navigate('QuizConfig')
+    })
+  };
+
+  useEffect(() => {
+    resetAnimations()
+    fadeIn()
+  }, [])
+
   return (
     <Animated.ScrollView
       contentContainerStyle={[
@@ -35,23 +43,23 @@ const QuizConfigScreen = ({
     >
       {/* Header con universidad */}
       <View style={styles.quizConfigHeader}>
-        {selectedUniversity && (
+        {university && (
           <View
             style={[
               styles.universityBadge,
-              { backgroundColor: selectedUniversity.color },
+              { backgroundColor: university.color },
             ]}
           >
             <View style={styles.universityBadgeIcon}>
-              {Icon[selectedUniversity.iconName] &&
-                React.createElement(Icon[selectedUniversity.iconName], {
+              {Icon[university.iconName] &&
+                React.createElement(Icon[university.iconName], {
                   width: 16,
                   height: 16,
                   color: '#FFFFFF',
                 })}
             </View>
             <Text style={styles.universityBadgeText}>
-              {selectedUniversity.name}
+              {university.name}
             </Text>
           </View>
         )}
@@ -70,7 +78,7 @@ const QuizConfigScreen = ({
                 styles.questionCountButton,
                 selectedQuestionCount === count && styles.questionCountButtonSelected,
               ]}
-              onPress={() => onSelectQuestionCount(count)}
+              onPress={() => setSelectedQuestionCount(count)}
             >
               <Text
                 style={[
@@ -103,7 +111,7 @@ const QuizConfigScreen = ({
               styles.subjectButton,
               !selectedSubject && { backgroundColor: colors.primary },
             ]}
-            onPress={() => onSelectSubject(null)}
+            onPress={() => setSelectedSubject(null)}
           >
             <Text
               style={[
@@ -123,7 +131,7 @@ const QuizConfigScreen = ({
                 { backgroundColor: colors[subject.toLowerCase()] || colors.accent },
                 selectedSubject === subject && styles.subjectButtonSelected,
               ]}
-              onPress={() => onSelectSubject(subject)}
+              onPress={() => setSelectedSubject(subject)}
             >
               <Text
                 style={[
@@ -140,7 +148,7 @@ const QuizConfigScreen = ({
 
       {/* Botón de comenzar */}
       <View style={styles.startButtonContainer}>
-        <PrimaryButton label="Comenzar Quiz" onPress={onStart} />
+        <PrimaryButton label="Comenzar Quiz" onPress={handleStartQuiz} />
       </View>
     </Animated.ScrollView>
   );

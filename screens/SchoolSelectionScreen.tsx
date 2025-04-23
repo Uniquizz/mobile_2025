@@ -21,12 +21,12 @@ const { width } = Dimensions.get('window');
 
 const SchoolSelectionScreen = () => {
   const { resetAnimations, fadeOut, fadeIn, setUniversity, ui: {fadeAnim, scaleAnim} } = useQuizStore()
-  // const navigation = useNavigation<NavigationProp>();
+  const navigation = useNavigation<NavigationProp>();
   const handleUniversitySelect = (university: University) => {
     setUniversity(university);
     fadeOut(() => {
       resetAnimations();
-      // navigation.navigate('QuizConfig')
+      navigation.navigate('QuizConfig')
     })
   };
 

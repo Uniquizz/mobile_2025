@@ -14,6 +14,7 @@ export const quizStoreInitialState = {
     score: 0,
     streak: 0,
     university: undefined,
+    currentQuestion: 0,
   },
   ui: {
     modalVisible: false,
