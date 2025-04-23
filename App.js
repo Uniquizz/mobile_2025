@@ -48,6 +48,7 @@ import ScoreScreen from './screens/ScoreScreen';
 import SchoolSelectionScreen from './screens/SchoolSelectionScreen';
 import LoginScreen from './screens/LoginScreen';
 import ProfileMenuModal from './components/modals/ProfileMenuModal';
+import ProfileEditScreen from './screens/ProfileEditScreen';
 
 
 
@@ -99,6 +100,13 @@ const QuizApp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [useGridLayout, setUseGridLayout] = useState(false);
   const [streak, setStreak] = useState(7);
+  const [showProfileEdit, setShowProfileEdit] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const [whatsappNumber, setWhatsappNumber] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
+
 
   // Quiz configuration states
   const [selectedQuestionCount, setSelectedQuestionCount] = useState(5);
@@ -135,6 +143,20 @@ const QuizApp = () => {
     }
 
     setQuizData(filteredData);
+  };
+
+  const handleSaveProfile = () => {
+    console.log('Perfil guardado:', {
+      fullName,
+      userEmail,
+      userPassword,
+      whatsappNumber,
+      profileImage
+    });
+  
+    // Aquí puedes guardar los datos a un backend, AsyncStorage, etc.
+    setShowProfileEdit(false);
+    setShowHomeScreen(true);
   };
 
   // Check if content needs grid layout
@@ -747,7 +769,7 @@ const QuizApp = () => {
 
       {/* Header */}
       <Header
-        showBack={showQuiz || showQuizConfig || showUniversitySelection || showScore || showLogin}
+        showBack={showQuiz || showQuizConfig || showUniversitySelection || showScore || showLogin || showProfileEdit}
         onBackPress={handleBackPress}
         showMenu={showHomeScreen}
         onMenuPress={() => setProfileMenuVisible(true)}
@@ -758,7 +780,7 @@ const QuizApp = () => {
                 showQuiz ? 'Uniquiz' :
                   showLogin ? 'Iniciar Sesión' :
                     showScore ? 'Resultados' :
-                      'UniQuiz'
+                      showProfileEdit ? 'Editar Perfil' : 'Uniquiz'
         }
         userName={userName}
       />
@@ -858,8 +880,16 @@ const QuizApp = () => {
             renderIcon={renderIcon}
             fadeAnim={fadeAnim}
             scaleAnim={scaleAnim}
+            onRegisterPress={() => {
+              setShowLogin(false);       // Ocultamos la pantalla de login
+              setShowProfileEdit(true);  // Mostramos la de editar perfil
+            }}
+
+
           />
         )}
+
+
 
 
 
@@ -878,6 +908,30 @@ const QuizApp = () => {
             }}
           />
         )}
+
+
+        {/* Profile Edit */}
+        {showProfileEdit && (
+          <ProfileEditScreen
+            onBack={handleBackPress}
+            fadeAnim={fadeAnim}
+            scaleAnim={scaleAnim}
+            renderIcon={renderIcon}
+            fullName={fullName}
+            setFullName={setFullName}
+            userEmail={userEmail}
+            setUserEmail={setUserEmail}
+            userPassword={userPassword}
+            setUserPassword={setUserPassword}
+            whatsappNumber={whatsappNumber}
+            setWhatsappNumber={setWhatsappNumber}
+            showPassword={showPassword}
+            setShowPassword={setShowPassword}
+            profileImage={profileImage}
+            handleSaveProfile={handleSaveProfile}
+          />
+        )}
+
       </ScrollView>
 
       {/* Modales */}
@@ -903,7 +957,7 @@ const QuizApp = () => {
       />
 
 
-  
+
 
 
 
