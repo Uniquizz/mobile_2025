@@ -25,6 +25,7 @@ interface QuizData {
   quiz: Quiz;
   university?: University;
   score: number;
+  currentQuestion: number;
   answeredQuestions: Question[];
   streak: number;
 }
@@ -50,6 +51,8 @@ export interface QuizState {
   answerQuestion: (question: Question, correct: boolean) => void;
 
   setStreak: (streak: number) => void;
+
+  resetQuiz: () => void;
 }
 
 const useQuizStore = create<QuizState>()((set, get) => ({
@@ -111,7 +114,8 @@ const useQuizStore = create<QuizState>()((set, get) => ({
   })),
   setUniversity: (university) => set((state) => ({ quiz: {...state.quiz, university}})),
 
-  setStreak: (streak) => set((state) => ({ quiz: { ...state.quiz, streak }}))
+  setStreak: (streak) => set((state) => ({ quiz: { ...state.quiz, streak }})),
+  resetQuiz: () => set(() => ({quiz: quizStoreInitialState.quiz}))
 }))
 
 export default useQuizStore;

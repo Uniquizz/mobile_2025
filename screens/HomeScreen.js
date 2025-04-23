@@ -19,6 +19,8 @@ import blogCategories from '../data/blogCategories';
 import useQuizStore from '../store/useQuizStore';
 import categories from '../data/categories';
 import blogEntries from '../data/blogEntries';
+import Page from '../components/templates/Page';
+import { useNavigation } from '@react-navigation/native';
 
 
 const { width, height } = Dimensions.get('window');
@@ -29,8 +31,8 @@ const { width, height } = Dimensions.get('window');
 const HomeScreenView = ({
 }) => {
 
-  const { auth: { name }, quiz: { streak}, toggleStreakModal, fadeIn, ui:{fadeAnim, scaleAnim}, resetAnimations } = useQuizStore();
-  
+  const { auth: { name }, quiz: { streak}, toggleStreakModal, fadeIn, ui:{fadeAnim, scaleAnim}, resetAnimations, fadeOut } = useQuizStore();
+  const navigation = useNavigation();
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   blogEntry=
@@ -38,23 +40,17 @@ const HomeScreenView = ({
       selectedCategory === 'all' ? true : entry.categoryId === selectedCategory
     ) ?? blogEntries[0]
 
-      const startQuizJourney = () => {
-        fadeOut(() => {
-          resetAnimations();
-          // navigation.navigate('QuizConfig')
-        })
-      };
-       useEffect(() => {
-          resetAnimations()
-          fadeIn()
-        }, [])
-      
-  
- 
-
-
-
-  return (
+    const startQuizJourney = () => {
+      fadeOut(() => {
+        resetAnimations();
+        navigation.navigate('SchoolSelection')
+      })
+    };
+    useEffect(() => {
+      resetAnimations()
+      fadeIn()
+    }, [])
+  return (<Page>
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -122,6 +118,7 @@ const HomeScreenView = ({
         </View>
       </Animated.View>
     </KeyboardAvoidingView>
+    </Page>
   );
 };
 

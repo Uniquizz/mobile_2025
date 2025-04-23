@@ -2,19 +2,22 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
 import * as Icon from 'react-native-feather';
+import { useNavigation } from '@react-navigation/native';
+import useQuizStore from '../../store/useQuizStore';
 
 const Header = ({
   showBack = false,
-  onBackPress = () => {},
   title = '',
   showMenu = false,
-  onMenuPress = () => {},
-  userName = '',
 }) => {
+
+  const navigator = useNavigation()
+  const { auth: { name }, toggleMenuProfile } = useQuizStore()
+
   return (
     <View style={styles.header}>
   {showBack && (
-    <TouchableOpacity onPress={onBackPress} style={styles.backButton}>
+    <TouchableOpacity onPress={() => navigator.goBack()} style={styles.backButton}>
       <Icon.ChevronLeft width={24} height={24} color={colors.textPrimary} />
     </TouchableOpacity>
   )}
@@ -24,10 +27,10 @@ const Header = ({
     <View style={styles.headerContent}>
       <View style={styles.userGreeting}>
         <Text style={styles.greetingText}>
-          {userName ? `Hola, ${userName}` : 'Uniquiz'}
+          {name ? `Hola, ${name}` : 'Uniquiz'}
         </Text>
       </View>
-      <TouchableOpacity onPress={onMenuPress} style={styles.menuButton}>
+      <TouchableOpacity onPress={toggleMenuProfile} style={styles.menuButton}>
         <Icon.Menu width={24} height={24} color={colors.textPrimary} />
       </TouchableOpacity>
     </View>
