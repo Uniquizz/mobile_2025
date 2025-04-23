@@ -122,7 +122,7 @@ const QuizApp = () => {
 
   // Home screen states
   const [showHomeScreen, setShowHomeScreen] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState('all');
+ 
 
   // Ref for scroll view to measure content height
   const scrollViewRef = useRef(null);
@@ -751,16 +751,6 @@ const QuizApp = () => {
         {showHomeScreen && (
 
           <HomeScreen
-            categories={categories}
-            selectedCategory={selectedCategory}
-            onCategoryPress={setSelectedCategory}
-            blogEntry={
-              blogEntries.find(entry =>
-                selectedCategory === 'all' ? true : entry.categoryId === selectedCategory
-              ) ?? blogEntries[0]
-            }
-            streak={streak}
-            userName={userName}
             onStartQuiz={startQuizJourney}
             onStreakPress={() => setStreakModalVisible(true)}
             fadeAnim={fadeAnim}
