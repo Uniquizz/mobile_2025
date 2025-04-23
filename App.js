@@ -51,6 +51,8 @@ import LoginScreen from './screens/LoginScreen';
 import ProfileMenuModal from './components/modals/ProfileMenuModal';
 import ProfileEditScreen from './screens/ProfileEditScreen';
 
+import useQuizStore from './store/useQuizStore';
+
 
 
 
@@ -81,6 +83,7 @@ const { width, height } = Dimensions.get('window');
 
 // Main component
 const QuizApp = () => {
+  const {ui:{ streakModalVisible}, toggleStreakModal} = useQuizStore();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
@@ -115,7 +118,6 @@ const QuizApp = () => {
   const [quizData, setQuizData] = useState([]);
 
   // New states for streak modal and profile menu
-  const [streakModalVisible, setStreakModalVisible] = useState(false);
   const [profileMenuVisible, setProfileMenuVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Changed to false to show login flow
   const [userName, setUserName] = useState(''); // Default user name
@@ -202,9 +204,8 @@ const QuizApp = () => {
         useNativeDriver: true,
       })
     ]).start(() => {
-      setShowHomeScreen(false);
-      setShowUniversitySelection(true);
-
+      
+      //fadeInn
       // Reset animations
       fadeAnim.setValue(0);
       scaleAnim.setValue(0.95);
@@ -750,12 +751,7 @@ const QuizApp = () => {
         {/* Home Screen */}
         {showHomeScreen && (
 
-          <HomeScreen
-            onStartQuiz={startQuizJourney}
-            onStreakPress={() => setStreakModalVisible(true)}
-            fadeAnim={fadeAnim}
-            scaleAnim={scaleAnim}
-          />
+          <HomeScreen/>
 
         )}
 
@@ -877,11 +873,7 @@ const QuizApp = () => {
       </ScrollView>
 
       {/* Modales */}
-      <StreakModal
-        visible={streakModalVisible}
-        onClose={() => setStreakModalVisible(false)}
-        streak={streak}
-      />
+      <StreakModal/>
 
       <ConfirmExitModal
         visible={modalVisible}

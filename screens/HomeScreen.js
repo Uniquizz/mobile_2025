@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -20,24 +20,35 @@ import useQuizStore from '../store/useQuizStore';
 import categories from '../data/categories';
 import blogEntries from '../data/blogEntries';
 
+
 const { width, height } = Dimensions.get('window');
 
 
+
+
 const HomeScreenView = ({
-  onCategoryPress,
-  blogEntry = {},
-  onStreakPress,
-  onStartQuiz,
-  fadeAnim,
-  scaleAnim,
 }) => {
 
-  const { auth: { name }, quiz: { streak}   } = useQuizStore();
+  const { auth: { name }, quiz: { streak}, toggleStreakModal, fadeIn, ui:{fadeAnim, scaleAnim}, resetAnimations } = useQuizStore();
+  
   const [selectedCategory, setSelectedCategory] = useState('all');
+
   blogEntry=
     blogEntries.find(entry =>
       selectedCategory === 'all' ? true : entry.categoryId === selectedCategory
     ) ?? blogEntries[0]
+
+      const startQuizJourney = () => {
+        fadeOut(() => {
+          resetAnimations();
+          // navigation.navigate('QuizConfig')
+        })
+      };
+       useEffect(() => {
+          resetAnimations()
+          fadeIn()
+        }, [])
+      
   
  
 
@@ -90,7 +101,7 @@ const HomeScreenView = ({
             <View style={styles.statsColumn}>
               <TouchableOpacity
                 style={styles.streakContainer}
-                onPress={onStreakPress}
+                onPress={toggleStreakModal}
               >
                 <Text style={styles.streakEmoji}>🔥</Text>
                 <View style={styles.streakInfo}>
@@ -106,7 +117,7 @@ const HomeScreenView = ({
         <View style={styles.buttonContainer}>
           <PrimaryButton
             label="¡Quízate!"
-            onPress={() => onStartQuiz?.()}
+            onPress={() => startQuizJourney()}
           />
         </View>
       </Animated.View>

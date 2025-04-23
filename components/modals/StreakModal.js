@@ -2,10 +2,13 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import BaseModal from './BaseModal';
 import colors from '../../styles/colors';
+import useQuizStore from '../../store/useQuizStore';
 
-const StreakModal = ({ visible, onClose, streak }) => {
+const StreakModal = ({ }) => {
+
+  const { toggleStreakModal, ui: { streakModalVisible }, quiz: { streak } } = useQuizStore();
   return (
-    <BaseModal visible={visible} onClose={onClose}>
+    <BaseModal visible={streakModalVisible} >
       <View style={styles.streakModal}>
         <Text style={styles.streakModalTitle}>¡Racha de {streak} días!</Text>
         <View style={styles.streakModalIcon}>
@@ -17,7 +20,7 @@ const StreakModal = ({ visible, onClose, streak }) => {
         </Text>
         <TouchableOpacity
           style={styles.streakModalButton}
-          onPress={onClose}
+          onPress={toggleStreakModal}
         >
           <Text style={styles.streakModalButtonText}>Cerrar</Text>
         </TouchableOpacity>
