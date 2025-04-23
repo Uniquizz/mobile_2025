@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -17,21 +17,30 @@ import BlogCard from '../components/BlogCard';
 import CategoryList from '../components/CategoryList';
 import blogCategories from '../data/blogCategories';
 import useQuizStore from '../store/useQuizStore';
+import categories from '../data/categories';
+import blogEntries from '../data/blogEntries';
 
 const { width, height } = Dimensions.get('window');
 
+
 const HomeScreenView = ({
-  selectedCategory,
   onCategoryPress,
   blogEntry = {},
-  streak,
   onStreakPress,
   onStartQuiz,
   fadeAnim,
   scaleAnim,
 }) => {
 
-  const { auth: { name } } = useQuizStore();
+  const { auth: { name }, quiz: { streak}   } = useQuizStore();
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  blogEntry=
+    blogEntries.find(entry =>
+      selectedCategory === 'all' ? true : entry.categoryId === selectedCategory
+    ) ?? blogEntries[0]
+  
+ 
+
 
 
   return (
@@ -54,7 +63,7 @@ const HomeScreenView = ({
           <CategoryList
             categories={blogCategories}
             selectedCategory={selectedCategory}
-            onCategoryPress={onCategoryPress}
+            onCategoryPress={setSelectedCategory}
           />
 
           {/* Featured Blog Entry */}

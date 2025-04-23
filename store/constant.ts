@@ -12,7 +12,7 @@ export const quizStoreInitialState = {
     answeredQuestions: [],
     quiz: undefined,
     score: 0,
-    streak: 0,
+    streak: 10,
   },
   ui: {
     modalVisible: false,
