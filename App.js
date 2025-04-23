@@ -790,6 +790,9 @@ const QuizApp = () => {
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
+        {/* <NavigationContainer>
+          <RootStack></RootStack>
+        </NavigationContainer> */}
         {/* Home Screen */}
         {showHomeScreen && (
 
