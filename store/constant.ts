@@ -4,7 +4,7 @@ export const quizStoreInitialState = {
   auth: {
     email: '',
     token: '',
-    name: '',
+    name: 'Isra',
     lastName: '',
     phone: '',
   },

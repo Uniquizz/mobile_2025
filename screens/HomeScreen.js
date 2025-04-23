@@ -16,11 +16,11 @@ import PrimaryButton from '../components/PrimaryButton';
 import BlogCard from '../components/BlogCard';
 import CategoryList from '../components/CategoryList';
 import blogCategories from '../data/blogCategories';
+import useQuizStore from '../store/useQuizStore';
 
 const { width, height } = Dimensions.get('window');
 
 const HomeScreenView = ({
-  userName,
   selectedCategory,
   onCategoryPress,
   blogEntry = {},
@@ -30,6 +30,10 @@ const HomeScreenView = ({
   fadeAnim,
   scaleAnim,
 }) => {
+
+  const { auth: { name } } = useQuizStore();
+
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -70,7 +74,7 @@ const HomeScreenView = ({
                   source={{ uri: 'https://via.placeholder.com/100/2D2D2D/E94057?text=K' }}
                   style={styles.avatar}
                 />
-                <Text style={styles.avatarName}>{userName}</Text>
+                <Text style={styles.avatarName}>{name}</Text>
               </View>
             </View>
 
