@@ -21,13 +21,14 @@ import * as Icon from 'react-native-feather';
 // Styles
 //////colors
 import colors from './styles/colors';
+import { NavigationContainer } from '@react-navigation/native';
+import { RootStack } from './router/Stacks';
 
 
 
 // Data
 import allQuizData from './data/quizData';
 import blogEntries from './data/blogEntries';
-import universities from './data/universities';
 import categories from './data/categories';
 import { questionCountOptions, subjectIcons } from './data/constants';
 
@@ -224,44 +225,7 @@ const QuizApp = () => {
     });
   };
 
-  const handleUniversitySelect = (university) => {
-    setSelectedUniversity(university);
-
-    // Animate out
-    Animated.parallel([
-      Animated.timing(fadeAnim, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }),
-      Animated.timing(scaleAnim, {
-        toValue: 0.95,
-        duration: 300,
-        useNativeDriver: true,
-      })
-    ]).start(() => {
-      setShowUniversitySelection(false);
-      setShowQuizConfig(true);
-
-      // Reset animations
-      fadeAnim.setValue(0);
-      scaleAnim.setValue(0.95);
-
-      // Animate in
-      Animated.parallel([
-        Animated.timing(fadeAnim, {
-          toValue: 1,
-          duration: 500,
-          useNativeDriver: true,
-        }),
-        Animated.timing(scaleAnim, {
-          toValue: 1,
-          duration: 500,
-          useNativeDriver: true,
-        })
-      ]).start();
-    });
-  };
+  
 
   const handleStartQuiz = () => {
     prepareQuizData();
@@ -753,16 +717,6 @@ const QuizApp = () => {
     console.log(`Final score: ${score}/${answeredQuestions.length}`);
   }
 
-  // Chunk array into groups of specified size
-  const chunkArray = (array, size) => {
-    return Array.from({ length: Math.ceil(array.length / size) }, (_, i) =>
-      array.slice(i * size, i * size + size)
-    );
-  };
-
-  // Create university grid
-  const universityGrid = chunkArray(universities, 2);
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor={colors.background} />
@@ -784,15 +738,15 @@ const QuizApp = () => {
         }
         userName={userName}
       />
+      {/* <NavigationContainer>
+        <RootStack></RootStack>
+      </NavigationContainer> */}
 
 
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* <NavigationContainer>
-          <RootStack></RootStack>
-        </NavigationContainer> */}
         {/* Home Screen */}
         {showHomeScreen && (
 
@@ -819,12 +773,7 @@ const QuizApp = () => {
 
         {/* University Selection Screen */}
         {showUniversitySelection && (
-          <SchoolSelectionScreen
-            universities={universities}
-            onSelectUniversity={handleUniversitySelect}
-            fadeAnim={fadeAnim}
-            scaleAnim={scaleAnim}
-          />
+          <SchoolSelectionScreen/>
         )}
 
 
