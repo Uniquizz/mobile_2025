@@ -30,7 +30,3 @@ export function getSubjectIcon(subject) {
       return BookOpen;
   }
 }
-export function renderIcon(IconComponent, props) {
-    return <IconComponent {...props} />;
-  }
-  

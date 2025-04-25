@@ -752,14 +752,7 @@ const QuizApp = () => {
 
         {/* Quiz Screen */}
         {showQuiz && quizData.length > 0 && (
-          <QuizScreen
-            currentQuestion={currentQuestion}
-            quizData={quizData}
-            selectedOption={selectedOption}
-            isAnswered={isAnswered}
-            handleAnswerOption={handleAnswerOption}
-            handleNextQuestion={handleNextQuestion}
-          />
+          <QuizScreen/>
         )}
 
 
@@ -843,23 +836,9 @@ const QuizApp = () => {
       {/* Modales */}
       <StreakModal/>
 
-      <ConfirmExitModal
-        visible={modalVisible}
-        onConfirm={handleConfirmExit}
-        onCancel={handleCancelExit}
-      />
+      <ConfirmExitModal/>
 
-
-      <ProfileMenuModal
-        visible={profileMenuVisible}
-        onClose={() => setProfileMenuVisible(false)}
-        userName={userName}
-        onLogout={handleLogout}
-        renderIcon={renderIcon}
-      />
-
-
-
+      <ProfileMenuModal/>
 
 
 

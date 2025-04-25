@@ -10,7 +10,8 @@ import colors from '../styles/colors';
 import * as Icon from 'react-native-feather';
 import PrimaryButton from '../components/PrimaryButton';
 import useQuizStore from '../store/useQuizStore';
-import { MatterCode, questionCountOptions } from '../data/constants';
+import { questionCountOptions } from '../data/constants';
+import { MatterCode } from '../interfaces/quiz.interface';
 const subjects = Object.keys(MatterCode);
 
 const QuizConfigScreen = () => {

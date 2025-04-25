@@ -2,20 +2,31 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import BaseModal from './BaseModal';
 import colors from '../../styles/colors';
+import useQuizStore from '../../store/useQuizStore';
 
-const ConfirmExitModal = ({ visible, onConfirm, onCancel }) => {
+const ConfirmExitModal = () => {
+  
+  const { ui: {modalVisible}, toggleModal, fadeOut } = useQuizStore()
+
+  const handleConfirmExit = () => {
+      toggleModal();
+      fadeOut(() => {
+        // navigator.navigate('Score')
+      })
+    };
+
   return (
-    <BaseModal visible={visible} onClose={onCancel}>
+    <BaseModal visible={modalVisible} onClose={toggleModal}>
       <View style={styles.modalView}>
         <Text style={styles.modalTitle}>¿Seguro que quieres salir?</Text>
         <Text style={styles.modalText}>Si sales, tu progreso se perderá.</Text>
 
         <View style={styles.modalButtons}>
-          <TouchableOpacity style={[styles.modalButton, styles.modalConfirmButton]} onPress={onConfirm}>
+          <TouchableOpacity style={[styles.modalButton, styles.modalConfirmButton]} onPress={handleConfirmExit}>
             <Text style={styles.modalButtonText}>Confirmar</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.modalButton, styles.modalCancelButton]} onPress={onCancel}>
+          <TouchableOpacity style={[styles.modalButton, styles.modalCancelButton]} onPress={toggleModal}>
             <Text style={styles.modalButtonText}>Cancelar</Text>
           </TouchableOpacity>
         </View>

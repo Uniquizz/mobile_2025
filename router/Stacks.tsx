@@ -36,6 +36,7 @@ export function RootStack() {
       <Stack.Screen options={{
         header: () => <Header showMenu title='Configura tu Quiz' ></Header>
       }} name="QuizConfig" component={QuizConfigScreen}></Stack.Screen>
+      {/* <Stack.Screen name="Login" component={LoginScreen}></Stack.Screen> */}
       {/* <Stack.Screen name="Login" component={LoginScreen}></Stack.Screen>
       <Stack.Screen name="ProfileEdit" component={ProfileEditScreen}></Stack.Screen>
       <Stack.Screen name="Quiz" component={QuizScreen}></Stack.Screen> */}

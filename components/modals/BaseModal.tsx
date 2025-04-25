@@ -2,7 +2,15 @@
 import React from 'react';
 import { Modal, View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
-const BaseModal = ({ visible, onClose, children, transparent = true, animationType = 'slide' }) => {
+interface Props {
+  visible: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+  transparent?: boolean;
+  animationType?: "slide" | "none" | "fade";
+}
+
+const BaseModal = ({ visible, onClose, children, transparent = true, animationType = 'slide' }: Props) => {
   return (
     <Modal
       visible={visible}

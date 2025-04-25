@@ -22,7 +22,7 @@ interface AuthData {
 }
 
 interface QuizData {
-  quiz: Quiz;
+  quiz?: Quiz;
   university?: University;
   score: number;
   currentQuestion: number;
@@ -49,10 +49,12 @@ export interface QuizState {
   setQuiz: (quiz: Quiz) => void;
   setUniversity: (university: University) => void;
   answerQuestion: (question: Question, correct: boolean) => void;
+  nextQuestion: () => void;
 
   setStreak: (streak: number) => void;
 
   resetQuiz: () => void;
+  closeSession: () => void;
 }
 
 const useQuizStore = create<QuizState>()((set, get) => ({
@@ -112,10 +114,17 @@ const useQuizStore = create<QuizState>()((set, get) => ({
       answeredQuestions: [...state.quiz.answeredQuestions, question],
     }
   })),
+  nextQuestion: () => set((state) => ({
+    quiz: {
+      ...state.quiz,
+      currentQuestion: state.quiz.currentQuestion < state.quiz.quiz.questions.length ? (state.quiz.currentQuestion + 1) : state.quiz.currentQuestion
+    }
+  })),
   setUniversity: (university) => set((state) => ({ quiz: {...state.quiz, university}})),
 
   setStreak: (streak) => set((state) => ({ quiz: { ...state.quiz, streak }})),
-  resetQuiz: () => set(() => ({quiz: quizStoreInitialState.quiz}))
+  resetQuiz: () => set(() => ({quiz: quizStoreInitialState.quiz})),
+  closeSession: () => set(() => ({auth: quizStoreInitialState.auth}))
 }))
 
 export default useQuizStore;

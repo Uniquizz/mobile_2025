@@ -8,7 +8,7 @@ const StreakModal = ({ }) => {
 
   const { toggleStreakModal, ui: { streakModalVisible }, quiz: { streak } } = useQuizStore();
   return (
-    <BaseModal visible={streakModalVisible} >
+    <BaseModal visible={streakModalVisible} onClose={toggleStreakModal}>
       <View style={styles.streakModal}>
         <Text style={styles.streakModalTitle}>¡Racha de {streak} días!</Text>
         <View style={styles.streakModalIcon}>

@@ -8,20 +8,24 @@ import {
 } from 'react-native';
 import BaseModal from './BaseModal';
 import colors from '../../styles/colors';
+import useQuizStore from '../../store/useQuizStore';
+import { renderIcon } from '../../utils/render.utils';
 
-const ProfileMenuModal = ({
-  visible,
-  onClose,
-  userName,
-  onLogout,
-  renderIcon,
-}) => {
+const ProfileMenuModal = () => {
+  const { ui: { profileMenuVisible }, auth: { name, email }, toggleMenuProfile, closeSession, resetQuiz } = useQuizStore()
+  const handleLogout = () => {
+    toggleMenuProfile();
+    closeSession();
+    resetQuiz();
+  };
+
+
   return (
-    <BaseModal visible={visible} onClose={onClose}>
+    <BaseModal visible={profileMenuVisible} onClose={toggleMenuProfile}>
       <View style={styles.menu}>
         <View style={styles.header}>
           <Text style={styles.title}>Perfil</Text>
-          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <TouchableOpacity style={styles.closeButton} onPress={toggleMenuProfile}>
             {renderIcon('x', { width: 24, height: 24, color: colors.textPrimary })}
           </TouchableOpacity>
         </View>
@@ -31,8 +35,8 @@ const ProfileMenuModal = ({
             source={{ uri: 'https://via.placeholder.com/100/2D2D2D/E94057?text=K' }}
             style={styles.avatar}
           />
-          <Text style={styles.name}>{userName}</Text>
-          <Text style={styles.email}>karen@example.com</Text>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.email}>{email}</Text>
         </View>
 
         <View style={styles.items}>
@@ -57,7 +61,7 @@ const ProfileMenuModal = ({
             <Text style={styles.text}>Ayuda</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.item, styles.logout]} onPress={onLogout}>
+          <TouchableOpacity style={[styles.item, styles.logout]} onPress={handleLogout}>
             <View style={styles.icon}>
               {renderIcon('log-out', { width: 20, height: 20, color: colors.error })}
             </View>
